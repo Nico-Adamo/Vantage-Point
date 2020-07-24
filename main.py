@@ -1,5 +1,6 @@
 import news_aggregator
 import news_embedder
+import news_recommender
 import database_manager
 import time
 
@@ -7,26 +8,16 @@ import numpy as np
 
 sources = ["http://cnn.com","http://www.nytimes.com","https://www.foxnews.com/"]
 
-newsManager = news_aggregator.NewsAggregator()
-newsEmbedder = news_embedder.NewsEmbedder()
-databaseManager = database_manager.DatabaseManager()
 
+databaseManager = database_manager.DatabaseManager("articles.db")
+newsRecommender = news_recommender.NewsRecommender(databaseManager)
+newsManager = news_aggregator.NewsAggregator(databaseManager)
+newsEmbedder = news_embedder.NewsEmbedder(databaseManager)
 
-newsManager.updateDatabase(sources, 10, "articles.db")
-articleTest=databaseManager.getArticleByIndex("articles.db",10)
-print(articleTest[0],articleTest[1])
+# Update 
+#newsManager.updateDatabase(sources, 20,databaseManager)
+#newsEmbedder.updateEmbeddingMatrix(databaseManager)
 
-# articleData = newsManager.getArticleData(sources,10)
-# articleTexts = [articleDatum[2] for articleDatum in articleData]
-
-#articleEmbeddings = newsEmbedder.getEmbeddingMatrix(articleTexts)
-
-#np.fill_diagonal(articleEmbeddings, np.nan) # We don't want an article similarity with itself
-
-#print(articleEmbeddings)
-#databaseManager.writeSimilarityMatrix("articles.db",articleEmbeddings)
-#data=databaseManager.getSimilarityMatrix("articles.db")
-
-#print(articleData[14][1])
-#result_idx = np.nanargmax(articleEmbeddings[14])
-#print(result_idx, articleData[result_idx][1])
+articles=newsRecommender.similarArticles("http://www.nytimes.com/2020/07/23/nyregion/coronavirus-testing-nyc.html",0.17)
+titles=[article[1] for article in articles]
+print(titles)
