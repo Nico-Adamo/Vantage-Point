@@ -1,4 +1,4 @@
-# Vantage-Point
+# Vantage Point
 ## Using deep learning to reccomend balanced news sources and combat fake news
 
 Vantage Point uses state-of-the-art language modelling in order to aggregate news and recommend a balanced and fair selection of sources on any given topic.
