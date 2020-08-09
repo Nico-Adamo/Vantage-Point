@@ -85,3 +85,14 @@ class DatabaseManager:
             id = None            
         conn.close()
         return id
+    
+    def getBias(self,url):
+        conn = self.connectDatabase()
+        cur = conn.cursor()
+        cur.execute("select bias from sources where url=?",(url,))
+        try: 
+            bias = cur.fetchone()[0]
+        except TypeError:
+            bias = None            
+        conn.close()
+        return bias

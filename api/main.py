@@ -24,8 +24,13 @@ newsEmbedder = news_embedder.NewsEmbedder(databaseManager)
 app = flask.Flask(__name__)
 
 def updateDatabase():
-    newsManager.updateDatabase(sources, 20,databaseManager)
+    newsManager.updateDatabase(sources, 100, databaseManager)
     newsEmbedder.updateEmbeddingMatrix(databaseManager)
+
+def getBaseURL(url):
+    for sourceURL in sources:
+        if url.startswith(sourceURL):
+            return sourceURL
 
 @app.route('/', methods=['GET'])
 def home():
@@ -42,13 +47,15 @@ def api_url():
         return "Error: No url field provided. Please specify an url."
     
     if 'cutoff' in request.args:
-        cutoff = int(request.args['cutoff'])
+        cutoff = float(request.args['cutoff'])
+        print(cutoff)
     else:
         cutoff = 0.17
 
     articles = newsRecommender.similarArticles(url,cutoff)
     articleURLText = [article[:2] for article in articles]
-    return jsonify(articleURLText)
+    articleBias = [databaseManager.getBias(getBaseURL(articleData[0])) for articleData in articles]
+    return jsonify([articleURLText,articleBias])
 
 
 scheduler = BackgroundScheduler()
