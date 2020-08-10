@@ -1,0 +1,66 @@
+.popup{
+    height: 600px; width: 800px;
+    background: rgba(214, 214, 214,0.2);
+}
+.articles-container { 
+  height: 480px; /*4/5 of 600 */
+  width: 800px;
+  position: relative;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+.center-articles{
+    position: absolute;
+    margin: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.article-container {
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 25px;
+  border: 1px solid #707070;
+  padding-top: 0px;
+  width: 230px; height: 356px;
+  box-shadow: 0px 3px 6px rgba(85,85,85, 0.4);
+}
+
+.article-container:not(:first-child):not(:last-child) {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.article-container:first-child{
+    margin-left: 30px;
+}
+
+.article-container:last-child{
+    margin-right: 30px; 
+}
+
+.article-image {
+    float: left;
+    margin: auto -1px;
+    margin-top: -1px;
+    width: 232px;
+    height: 193px;
+}
+
+.article-title{
+    clear:left;
+    padding: 10px;
+    width: 200px;
+    height: 130px;
+    white-space: normal;
+    overflow: hidden; 
+}
+
+.article-title-text{
+    font-family: "Segoe UI";
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+    text-overflow: ellipsis; 
+}
